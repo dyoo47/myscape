@@ -1,15 +1,20 @@
 <script>
+	import Search from '../components/Search.svelte';
+
+	let isLoading;
 	const fetchData = async () => {
+		isLoading = true;
 		const response = await fetch('/scrape');
 		const data = await response.json();
 		console.log(data);
+		isLoading = false;
 	};
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
 	<div class="space-y-5">
-		<h1 class="h1">Let's get cracking bones!</h1>
-		<p>Start by exploring:</p>
+		<h1 class="h1">myscape - job board webscraper</h1>
+		<Search onClick={fetchData} />
 		<ul>
 			<li>
 				<code class="code">/src/routes/+layout.svelte</code> - barebones layout, the CSS import order
@@ -21,9 +26,6 @@
 			</li>
 			<li>
 				<code class="code">/src/routes/+page.svelte</code> - this page, you can replace the contents
-			</li>
-			<li>
-				<button type="button" class="btn variant-filled" on:click={fetchData}>Click Me!</button>
 			</li>
 		</ul>
 	</div>
