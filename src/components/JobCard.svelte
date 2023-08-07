@@ -24,7 +24,9 @@
 	class="mb-2 group grid grid-cols-4 bg-opacity-0 bg-slate-600 hover:bg-opacity-40 p-4 rounded transition duration-150 ease-in-out"
 >
 	<div class="col col-span-6">
-		<span class="text-xs font-semibold text-slate-400">{location.toUpperCase()}</span>
+		<span class="text-xs font-semibold text-slate-400 tracking-widest"
+			>{location.toUpperCase()}</span
+		>
 		<br />
 		<h6 class="h6 mb-2 whitespace-nowrap">
 			{company} -
@@ -62,7 +64,10 @@
 		<ul>
 			{#each skills as skill}
 				<li class="inline">
-					<span class="badge mt-2 mr-1 variant-outline-primary rounded-xl">{skill}</span>
+					<span
+						class="badge font-light mt-2 mr-1 text-primary-100 p-2 variant-outline-primary rounded-full"
+						>{skill}</span
+					>
 				</li>
 			{/each}
 		</ul>
