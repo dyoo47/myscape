@@ -1,4 +1,3 @@
-import { LINKED_IN_URL } from '$lib/server/constants';
 import { json } from '@sveltejs/kit';
 import puppeteer, { ElementHandle, Page } from 'puppeteer';
 
@@ -12,12 +11,16 @@ const getHrefByClass = async (element: ElementHandle<Element> | Page, classText:
 	)?.trim() as string;
 };
 
+const truncateString = (string = '', maxLength = 50) =>
+	string.length > maxLength ? `${string.substring(0, maxLength)}…` : string;
+
 interface LinkedInDataEntry {
 	title: string;
 	link: string;
 	seniority: string;
 	company: string;
 	location: string;
+	description: string;
 }
 
 const request = async () => {
@@ -27,10 +30,14 @@ const request = async () => {
 	});
 
 	const page = await browser.newPage();
+	const query = 'software engineer';
+	const start = 0;
+	const jobListPage = await fetch(
+		`https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?trk=guest_homepage-basic_guest_nav_menu_jobs&start=${start}&keywords=${query}`
+	);
+	const html = await jobListPage.text();
 
-	await page.goto(LINKED_IN_URL, {
-		waitUntil: 'domcontentloaded'
-	});
+	page.setContent(html);
 
 	const jobIds = await page.$$eval('.job-search-card', (el) =>
 		el.map((x) => x.getAttribute('data-entity-urn')?.replace(/[^0-9]/g, ''))
@@ -50,10 +57,16 @@ const request = async () => {
 		const title = await getTextByClass(page, '.topcard__link');
 		const link = await getHrefByClass(page, '.topcard__link');
 		const location = await getTextByClass(page, '.topcard__flavor--bullet');
-		const entry = { title, link, seniority, company, location };
+		const description = truncateString(
+			await getTextByClass(page, '.show-more-less-html__markup--clamp-after-5')
+		);
+
+		const entry = { title, link, seniority, company, location, description };
 		console.log(entry);
-		data = data.concat(entry);
+		if (entry.title) data = data.concat(entry);
 	}
+
+	await browser.close();
 
 	return data;
 };
