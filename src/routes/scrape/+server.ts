@@ -1,3 +1,4 @@
+import { DEFAULT_QUERY } from '$lib/server/constants.js';
 import { json } from '@sveltejs/kit';
 import puppeteer, { ElementHandle, Page } from 'puppeteer';
 
@@ -23,14 +24,13 @@ interface LinkedInDataEntry {
 	description: string;
 }
 
-const request = async () => {
+const request = async (query: string) => {
 	const browser = await puppeteer.launch({
 		headless: false,
 		defaultViewport: null
 	});
 
 	const page = await browser.newPage();
-	const query = 'software engineer';
 	const start = 0;
 	const jobListPage = await fetch(
 		`https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?trk=guest_homepage-basic_guest_nav_menu_jobs&start=${start}&keywords=${query}`
@@ -71,7 +71,8 @@ const request = async () => {
 	return data;
 };
 
-export async function GET() {
-	const data = await request();
+export const GET = async ({ url }) => {
+	const query = url.searchParams.get('query');
+	const data = await request(query ? query : DEFAULT_QUERY);
 	return json(data);
-}
+};
