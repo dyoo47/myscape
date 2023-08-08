@@ -21,7 +21,7 @@
 <a
 	{href}
 	{target}
-	class="mb-2 group grid grid-cols-4 bg-opacity-0 bg-slate-600 hover:bg-opacity-40 p-4 rounded transition duration-150 ease-in-out"
+	class="mb-2 group grid grid-cols-4 bg-opacity-0 bg-surface-500 hover:bg-opacity-40 p-4 rounded transition duration-150 ease-in-out"
 >
 	<div class="col col-span-6">
 		<span class="text-xs font-semibold text-slate-400 tracking-widest"

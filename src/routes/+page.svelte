@@ -26,7 +26,6 @@
 	<div class="space-y-5">
 		<h1 class="h1">myscape - job board webscraper</h1>
 		<Search {fetchData} />
-
 		<div class="row">
 			{#if data && !loading}
 				{#each data as { title, link, company, location, description, seniority }}
