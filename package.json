@@ -35,6 +35,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.4.2",
+		"openai": "^3.3.0",
 		"puppeteer": "^21.0.1",
 		"svelte-fa": "^3.0.4"
 	}

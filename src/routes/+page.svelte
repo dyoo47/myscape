@@ -22,7 +22,7 @@
 	};
 </script>
 
-<div class="container mt-20 mx-auto flex justify-center">
+<div class="container px-4 mt-20 mx-auto flex justify-center">
 	<div class="space-y-5">
 		<h1 class="h1">myscape - job board webscraper</h1>
 		<Search {fetchData} />

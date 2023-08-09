@@ -28,7 +28,7 @@
 			>{location.toUpperCase()}</span
 		>
 		<br />
-		<h6 class="h6 mb-2 whitespace-nowrap">
+		<h6 class="h6 mb-2 break-normal">
 			{company} -
 			{title}
 			{#if disableLink}
@@ -65,7 +65,7 @@
 			{#each skills as skill}
 				<li class="inline">
 					<span
-						class="badge font-light mt-2 mr-1 text-primary-100 p-2 variant-outline-primary rounded-full"
+						class="badge font-semibold mt-2 mr-1 text-primary-100 p-2 variant-outline-primary rounded-full"
 						>{skill}</span
 					>
 				</li>

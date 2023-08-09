@@ -26,7 +26,7 @@
 			bind:value={query}
 			type="search"
 			id="default-search"
-			class="block w-full p-4 pl-10 text-sm text-surface-900 border border-surface-300 rounded-lg bg-gray-50 focus:ring-primary-500 focus:border-primary-500 dark:bg-surface-500 dark:border-surface-600 dark:placeholder-surface-300 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+			class="block transition-all ease-in-out duration-150 w-full p-4 pl-10 text-sm text-surface-900 outline-none border-2 rounded-lg dark:bg-surface-500 dark:border-surface-600 dark:placeholder-surface-300 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
 			placeholder="search job titles, locations..."
 		/>
 		<button
