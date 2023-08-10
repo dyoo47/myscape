@@ -27,7 +27,7 @@ interface LinkedInDataEntry {
 
 const request = async (query: string) => {
 	const browser = await puppeteer.launch({
-		headless: false,
+		headless: true,
 		defaultViewport: null
 	});
 
@@ -60,9 +60,6 @@ const request = async (query: string) => {
 		const location = await getTextByClass(page, '.topcard__flavor--bullet');
 		const raw = await getTextByClass(page, '.show-more-less-html__markup--clamp-after-5');
 		const description = truncateString(raw);
-
-		const pay = await getSummary(raw);
-		console.log(pay);
 
 		const entry = { title, link, seniority, company, location, description };
 		//console.log(entry);
