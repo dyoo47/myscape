@@ -1,6 +1,7 @@
 import { DEFAULT_QUERY } from '$lib/server/constants.js';
 import { json } from '@sveltejs/kit';
 import puppeteer, { ElementHandle, Page } from 'puppeteer';
+import getSummary from '../api/generate.js';
 
 const getTextByClass = async (element: ElementHandle<Element> | Page, classText: string) => {
 	return (await (await element.$(classText))?.evaluate((el) => el.textContent))?.trim() as string;
@@ -42,7 +43,7 @@ const request = async (query: string) => {
 	const jobIds = await page.$$eval('.job-search-card', (el) =>
 		el.map((x) => x.getAttribute('data-entity-urn')?.replace(/[^0-9]/g, ''))
 	);
-	console.log(jobIds);
+	//console.log(jobIds);
 
 	let data: LinkedInDataEntry[] = [];
 
@@ -57,12 +58,14 @@ const request = async (query: string) => {
 		const title = await getTextByClass(page, '.topcard__link');
 		const link = await getHrefByClass(page, '.topcard__link');
 		const location = await getTextByClass(page, '.topcard__flavor--bullet');
-		const description = truncateString(
-			await getTextByClass(page, '.show-more-less-html__markup--clamp-after-5')
-		);
+		const raw = await getTextByClass(page, '.show-more-less-html__markup--clamp-after-5');
+		const description = truncateString(raw);
+
+		const pay = await getSummary(raw);
+		console.log(pay);
 
 		const entry = { title, link, seniority, company, location, description };
-		console.log(entry);
+		//console.log(entry);
 		if (entry.title) data = data.concat(entry);
 	}
 
