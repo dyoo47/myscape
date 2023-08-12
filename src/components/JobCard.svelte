@@ -1,36 +1,33 @@
 <script lang="ts">
 	import Fa from 'svelte-fa';
 	import { faArrowRight, faLink } from '@fortawesome/free-solid-svg-icons';
+	import type { LinkedInDataEntry } from '$lib/constants';
 
 	interface link {
 		label: string;
 		href: string;
 	}
 
-	export let skills: string[] = [];
-	export let links: link[] = [];
-	export let location: string = '';
-	export let title: string = '';
-	export let description: string = '';
-	export let company: string = '';
-	export let href: string;
+	export let entry: LinkedInDataEntry;
 	export let disableLink: boolean = false;
+	export let links: link[] = [];
+	export let badges: string[] = [];
 	let target = disableLink ? '' : '_blank';
 </script>
 
 <a
-	{href}
+	href={entry.link}
 	{target}
 	class="mb-2 group grid grid-cols-4 bg-opacity-0 bg-surface-500 hover:bg-opacity-40 p-4 rounded transition duration-150 ease-in-out"
 >
-	<div class="col col-span-6">
+	<div class="col col-span-4">
 		<span class="text-xs font-semibold text-slate-400 tracking-widest"
-			>{location.toUpperCase()}</span
+			>{entry.location.toUpperCase()}</span
 		>
 		<br />
 		<h6 class="h6 mb-2 break-normal">
-			{company} -
-			{title}
+			{entry.company} -
+			{entry.title}
 			{#if disableLink}
 				<span class="badge variant-ghost-surface rounded-md ml-2 text-slate-400">Private Repo</span>
 			{:else}
@@ -43,8 +40,17 @@
 			{/if}
 		</h6>
 		<p class="mb-2 text-sm text-slate-400">
-			{description}
+			{entry.description}
 		</p>
+
+		{#if entry.quals.length > 0}
+			<p class="underline text-sm text-slate-400">Minimum qualifications:</p>
+		{/if}
+		<ul class="text-sm list-disc text-slate-400 list-inside">
+			{#each entry.quals as qual}
+				<li>{qual}</li>
+			{/each}
+		</ul>
 		<div class="mb-2">
 			<ul>
 				{#each links as link}
@@ -62,11 +68,11 @@
 			</ul>
 		</div>
 		<ul>
-			{#each skills as skill}
+			{#each badges as badge}
 				<li class="inline">
 					<span
 						class="badge font-semibold mt-2 mr-1 text-primary-100 p-2 variant-outline-primary rounded-full"
-						>{skill}</span
+						>{badge}</span
 					>
 				</li>
 			{/each}

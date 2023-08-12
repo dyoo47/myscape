@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { DEFAULT_QUERY } from '$lib/constants';
+
 	export let fetchData: (query: string) => void;
-	let query: string = 'software engineer';
+	let query: string = DEFAULT_QUERY;
 </script>
 
 <form>

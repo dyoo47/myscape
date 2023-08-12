@@ -1,16 +1,8 @@
 <script lang="ts">
+	import type { LinkedInDataEntry } from '$lib/constants';
 	import JobCard from '../components/JobCard.svelte';
 	import Placeholder from '../components/Placeholder.svelte';
 	import Search from '../components/Search.svelte';
-
-	interface LinkedInDataEntry {
-		title: string;
-		link: string;
-		seniority: string;
-		company: string;
-		location: string;
-		description: string;
-	}
 
 	let loading = false;
 	let data: LinkedInDataEntry[];
@@ -28,8 +20,8 @@
 		<Search {fetchData} />
 		<div class="row">
 			{#if data && !loading}
-				{#each data as { title, link, company, location, description, seniority }}
-					<JobCard href={link} {title} {location} {company} {description} skills={[seniority]} />
+				{#each data as entry}
+					<JobCard badges={[entry.seniority]} {entry} />
 				{/each}
 			{:else if loading}
 				<Placeholder />
