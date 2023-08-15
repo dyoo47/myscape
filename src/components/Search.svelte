@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { DEFAULT_QUERY } from '$lib/constants';
+	import Fa from 'svelte-fa';
+	import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 	export let fetchData: (query: string) => void;
 	let query: string = DEFAULT_QUERY;
@@ -31,12 +33,21 @@
 			class="block transition-all ease-in-out duration-150 w-full p-4 pl-10 text-sm text-surface-900 outline-none border-2 rounded-lg dark:bg-surface-500 dark:border-surface-600 dark:placeholder-surface-300 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
 			placeholder="search job titles, locations..."
 		/>
-		<button
-			on:click={() => {
-				fetchData(query);
-			}}
-			class="text-white absolute right-2.5 bottom-2.5 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-			>search</button
-		>
+		<div class="absolute right-2.5 bottom-2.5 inline-flex rounded-lg overflow-hidden" role="group">
+			<button
+				on:click={() => {
+					fetchData(query);
+				}}
+				type="button"
+				class="text-white border-r-2 border-primary-800 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+				>search</button
+			>
+			<button
+				type="button"
+				class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm px-3 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+			>
+				<Fa icon={faFilter} />
+			</button>
+		</div>
 	</div>
 </form>
