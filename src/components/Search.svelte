@@ -2,12 +2,30 @@
 	import { DEFAULT_QUERY } from '$lib/constants';
 	import Fa from 'svelte-fa';
 	import { faFilter } from '@fortawesome/free-solid-svg-icons';
+	import {
+		Modal,
+		modalStore,
+		type ModalSettings,
+		type ModalComponent
+	} from '@skeletonlabs/skeleton';
+	import FilterModal from './FilterModal.svelte';
 
 	export let fetchData: (query: string) => void;
 	let query: string = DEFAULT_QUERY;
+
+	const modalComponent: ModalComponent = {
+		ref: FilterModal,
+		slot: '<p>Could not load modal component.</p>'
+	};
+
+	const modal: ModalSettings = {
+		type: 'component',
+		component: modalComponent
+	};
 </script>
 
 <form>
+	<Modal />
 	<div class="relative">
 		<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 			<svg
@@ -39,12 +57,15 @@
 					fetchData(query);
 				}}
 				type="button"
-				class="text-white border-r-2 border-primary-800 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+				class="text-white border-r-2 border-primary-800 bg-primary-700 hover:bg-primary-800 focus:outline-none focus:ring-primary-300 font-medium text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 				>search</button
 			>
 			<button
 				type="button"
-				class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm px-3 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+				on:click={() => {
+					modalStore.trigger(modal);
+				}}
+				class="text-white border-primary-800 bg-primary-700 hover:bg-primary-800 focus:outline-none focus:ring-0 font-medium text-sm px-3 py-2 dark:bg-primary-600 dark:hover:bg-primary-700"
 			>
 				<Fa icon={faFilter} />
 			</button>

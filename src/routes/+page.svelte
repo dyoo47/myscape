@@ -26,7 +26,6 @@
 			</div>
 		</div>
 		<Search {fetchData} />
-
 		<div class="row">
 			{#if data && !loading}
 				{#each data as entry}
