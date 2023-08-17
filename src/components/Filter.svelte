@@ -1,5 +1,5 @@
 <script lang="ts">
-	let selected: boolean = false;
+	export let selected: boolean = false;
 </script>
 
 <button

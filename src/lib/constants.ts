@@ -18,5 +18,6 @@ export const MQ_TAGS = [
 	'minimum requirements',
 	'qualifications',
 	'about you',
-	"you're a match for our team if you"
+	"you're a match for our team if you",
+	'must haves'
 ];

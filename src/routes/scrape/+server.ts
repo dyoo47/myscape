@@ -83,10 +83,8 @@ const request = async (query: string) => {
 			}
 		}
 
-		console.log(quals);
 		const description = truncateString((await raw?.evaluate((el) => el.textContent)) as string);
 		const entry = { title, link, seniority, company, location, description, quals };
-		//console.log(entry);
 		if (entry.title) data = data.concat(entry);
 	}
 
