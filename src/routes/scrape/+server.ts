@@ -35,14 +35,13 @@ const getListItems = async (header: ElementHandle<HTMLElement>) => {
 const truncateString = (string = '', maxLength = 200) =>
 	string.length > maxLength ? `${string.substring(0, maxLength)}…` : string;
 
-const request = async (query: string) => {
+const request = async (query: string, start: number) => {
 	const browser = await puppeteer.launch({
 		headless: true,
 		defaultViewport: null
 	});
 
 	const page = await browser.newPage();
-	const start = 0;
 	const jobListPage = await fetch(
 		`https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?trk=guest_homepage-basic_guest_nav_menu_jobs&start=${start}&keywords=${query}`
 	);
@@ -95,6 +94,7 @@ const request = async (query: string) => {
 
 export const GET = async ({ url }) => {
 	const query = url.searchParams.get('query');
-	const data = await request(query ? query : DEFAULT_QUERY);
+	const start = url.searchParams.get('start');
+	const data = await request(query ? query : DEFAULT_QUERY, Number(start));
 	return json(data);
 };
