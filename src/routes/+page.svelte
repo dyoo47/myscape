@@ -49,6 +49,10 @@
 			{/each}
 			{#if loading}
 				<Placeholder />
+			{:else if data.length === 0}
+				<div class="col text-sm outline outline-1 outline-error-500 rounded-lg p-4">
+					no results found.
+				</div>
 			{:else}
 				<div />
 			{/if}
