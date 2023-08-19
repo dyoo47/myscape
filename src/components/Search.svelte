@@ -11,6 +11,7 @@
 	import FilterModal from './FilterModal.svelte';
 
 	export let fetchData: (query: string) => void;
+	export let loading: boolean = false;
 	let query: string = DEFAULT_QUERY;
 
 	const modalComponent: ModalComponent = {
@@ -53,10 +54,11 @@
 		/>
 		<div class="absolute right-2.5 bottom-2.5 inline-flex rounded-lg overflow-hidden" role="group">
 			<button
+				disabled={loading}
 				on:click={() => {
 					fetchData(query);
 				}}
-				type="button"
+				type="submit"
 				class="text-white border-r-2 border-primary-800 bg-primary-700 hover:bg-primary-800 focus:outline-none focus:ring-primary-300 font-medium text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 				>search</button
 			>

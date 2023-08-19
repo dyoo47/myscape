@@ -13,9 +13,9 @@
 	let startIndex = 0;
 	const fetchData = async (query: string, start: number = 0) => {
 		loading = true;
+		if (start === 0) data = [];
 		const response = await fetch(`/scrape?query=${query}&start=${start}`);
-		if (start === 0) data = await response.json();
-		else data = data.concat(await response.json());
+		data = data.concat(await response.json());
 		loading = false;
 	};
 	onMount(() => {
@@ -25,7 +25,6 @@
 		};
 		let callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
 			if (entries[0].isIntersecting && !loading) {
-				console.log('fetching at start ' + startIndex);
 				startIndex += 15;
 				fetchData(DEFAULT_QUERY, startIndex);
 			}
@@ -43,7 +42,7 @@
 				<Button href="https://github.com/dyoo47/myscape"><Fa icon={faGithub} /></Button>
 			</div>
 		</div>
-		<Search {fetchData} />
+		<Search {loading} {fetchData} />
 		<div class="row">
 			{#each data as entry}
 				<JobCard badges={[entry.seniority]} {entry} />
