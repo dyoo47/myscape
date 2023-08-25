@@ -11,6 +11,7 @@
 	let loading = false;
 	let data: LinkedInDataEntry[] = [];
 	let startIndex = 0;
+
 	const fetchData = async (query: string, start: number = 0) => {
 		loading = true;
 		if (start === 0) data = [];
@@ -18,6 +19,7 @@
 		data = data.concat(await response.json());
 		loading = false;
 	};
+
 	onMount(() => {
 		let options = {
 			rootMargin: '0px',
