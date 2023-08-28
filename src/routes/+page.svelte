@@ -1,16 +1,27 @@
 <script lang="ts">
-	import { DEFAULT_QUERY, type LinkedInDataEntry } from '$lib/constants';
+	import { DEFAULT_QUERY, type Filter, type LinkedInDataEntry } from '$lib/constants';
 	import { faGithub } from '@fortawesome/free-brands-svg-icons';
 	import Fa from 'svelte-fa';
 	import Button from '../components/Button.svelte';
 	import JobCard from '../components/JobCard.svelte';
 	import Placeholder from '../components/Placeholder.svelte';
 	import Search from '../components/Search.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import { filters } from '../stores';
 
 	let loading = false;
 	let data: LinkedInDataEntry[] = [];
 	let startIndex = 0;
+
+	let seniorityList: string[];
+	const unsubscribe = filters.subscribe((value) => {
+		console.log('filters: ', value);
+		seniorityList = value.map((val) => {
+			if (val.type === 'seniority') return val.value;
+			else return;
+		}) as string[];
+		console.log(seniorityList);
+	});
 
 	const fetchData = async (query: string, start: number = 0) => {
 		loading = true;
@@ -34,6 +45,7 @@
 		let observer = new IntersectionObserver(callback, options);
 		observer.observe(document.querySelector('#endoflist') as Element);
 	});
+	onDestroy(unsubscribe);
 </script>
 
 <div style="max-width: 960px" class="px-4 mt-20 mx-auto flex justify-center">
@@ -47,7 +59,9 @@
 		<Search {loading} {fetchData} />
 		<div class="row">
 			{#each data as entry}
-				<JobCard badges={[entry.seniority]} {entry} />
+				{#if seniorityList.length === 0 || seniorityList.includes(entry.seniority.toLowerCase())}
+					<JobCard badges={[entry.seniority]} {entry} />
+				{/if}
 			{/each}
 			{#if loading}
 				<Placeholder />
